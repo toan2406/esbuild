@@ -6539,11 +6539,28 @@ func (p *parser) visitAndAppendStmt(stmts []ast.Stmt, stmt ast.Stmt) []ast.Stmt 
 		s.Decls = p.lowerBindingsInDecls(s.Decls)
 
 	case *ast.SExpr:
+		// Remember if this was a comma expression
+		wasComma := false
+		if !p.MangleSyntax {
+			if binary, ok := s.Value.Data.(*ast.EBinary); ok {
+				wasComma = binary.Op == ast.BinOpComma
+			}
+		}
+
 		s.Value = p.visitExpr(s.Value)
 
 		// Trim expressions without side effects
 		if p.MangleSyntax && hasNoSideEffects(s.Value.Data) {
 			stmt = ast.Stmt{stmt.Loc, &ast.SEmpty{}}
+			break
+		}
+
+		// If this wasn't a comma expression but it is now, split the comma chain
+		// into individual expressions to improve readability
+		if !wasComma {
+			if binary, ok := s.Value.Data.(*ast.EBinary); ok && binary.Op == ast.BinOpComma {
+				return commaChainToStatements(stmts, s.Value)
+			}
 		}
 
 	case *ast.SThrow:
@@ -6960,6 +6977,16 @@ func maybeJoinWithComma(a ast.Expr, b ast.Expr) ast.Expr {
 		return a
 	}
 	return ast.JoinWithComma(a, b)
+}
+
+func commaChainToStatements(stmts []ast.Stmt, expr ast.Expr) []ast.Stmt {
+	if e, ok := expr.Data.(*ast.EBinary); ok && e.Op == ast.BinOpComma {
+		stmts = commaChainToStatements(stmts, e.Left)
+		stmts = commaChainToStatements(stmts, e.Right)
+	} else {
+		stmts = append(stmts, ast.Stmt{expr.Loc, &ast.SExpr{expr}})
+	}
+	return stmts
 }
 
 // This is a helper function to use when you need to capture a value that may

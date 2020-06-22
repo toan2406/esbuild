@@ -189,13 +189,13 @@ func TestLowerPrivateFieldAssignments2015NoBundle(t *testing.T) {
 			"/entry.js": `
 				class Foo {
 					#x
-					unary() {
-						this.#x++
-						this.#x--
-						++this.#x
-						--this.#x
-					}
-					binary() {
+					unary = () => [
+						this.#x++,
+						this.#x--,
+						++this.#x,
+						--this.#x,
+					]
+					binary = () => {
 						this.#x = 1
 						this.#x += 1
 						this.#x -= 1
@@ -230,32 +230,34 @@ func TestLowerPrivateFieldAssignments2015NoBundle(t *testing.T) {
 class Foo {
   constructor() {
     _x.set(this, void 0);
-  }
-  unary() {
-    var _a, _b;
-    __privateSet(this, _x, (_a = +__privateGet(this, _x)) + 1), _a;
-    __privateSet(this, _x, (_b = +__privateGet(this, _x)) - 1), _b;
-    __privateSet(this, _x, +__privateGet(this, _x) + 1);
-    __privateSet(this, _x, +__privateGet(this, _x) - 1);
-  }
-  binary() {
-    var _a;
-    __privateSet(this, _x, 1);
-    __privateSet(this, _x, __privateGet(this, _x) + 1);
-    __privateSet(this, _x, __privateGet(this, _x) - 1);
-    __privateSet(this, _x, __privateGet(this, _x) * 1);
-    __privateSet(this, _x, __privateGet(this, _x) / 1);
-    __privateSet(this, _x, __privateGet(this, _x) % 1);
-    __privateSet(this, _x, __pow(__privateGet(this, _x), 1));
-    __privateSet(this, _x, __privateGet(this, _x) << 1);
-    __privateSet(this, _x, __privateGet(this, _x) >> 1);
-    __privateSet(this, _x, __privateGet(this, _x) >>> 1);
-    __privateSet(this, _x, __privateGet(this, _x) & 1);
-    __privateSet(this, _x, __privateGet(this, _x) | 1);
-    __privateSet(this, _x, __privateGet(this, _x) ^ 1);
-    __privateGet(this, _x) && __privateSet(this, _x, 1);
-    __privateGet(this, _x) || __privateSet(this, _x, 1);
-    (_a = __privateGet(this, _x)) != null ? _a : __privateSet(this, _x, 1);
+    this.unary = () => {
+      var _a, _b;
+      return [
+        (__privateSet(this, _x, (_a = +__privateGet(this, _x)) + 1), _a),
+        (__privateSet(this, _x, (_b = +__privateGet(this, _x)) - 1), _b),
+        __privateSet(this, _x, +__privateGet(this, _x) + 1),
+        __privateSet(this, _x, +__privateGet(this, _x) - 1)
+      ];
+    };
+    this.binary = () => {
+      var _a;
+      __privateSet(this, _x, 1);
+      __privateSet(this, _x, __privateGet(this, _x) + 1);
+      __privateSet(this, _x, __privateGet(this, _x) - 1);
+      __privateSet(this, _x, __privateGet(this, _x) * 1);
+      __privateSet(this, _x, __privateGet(this, _x) / 1);
+      __privateSet(this, _x, __privateGet(this, _x) % 1);
+      __privateSet(this, _x, __pow(__privateGet(this, _x), 1));
+      __privateSet(this, _x, __privateGet(this, _x) << 1);
+      __privateSet(this, _x, __privateGet(this, _x) >> 1);
+      __privateSet(this, _x, __privateGet(this, _x) >>> 1);
+      __privateSet(this, _x, __privateGet(this, _x) & 1);
+      __privateSet(this, _x, __privateGet(this, _x) | 1);
+      __privateSet(this, _x, __privateGet(this, _x) ^ 1);
+      __privateGet(this, _x) && __privateSet(this, _x, 1);
+      __privateGet(this, _x) || __privateSet(this, _x, 1);
+      (_a = __privateGet(this, _x)) != null ? _a : __privateSet(this, _x, 1);
+    };
   }
 }
 _x = new WeakMap();
@@ -270,13 +272,13 @@ func TestLowerPrivateFieldAssignments2019NoBundle(t *testing.T) {
 			"/entry.js": `
 				class Foo {
 					#x
-					unary() {
-						this.#x++
-						this.#x--
-						++this.#x
-						--this.#x
-					}
-					binary() {
+					unary = () => [
+						this.#x++,
+						this.#x--,
+						++this.#x,
+						--this.#x,
+					]
+					binary = () => {
 						this.#x = 1
 						this.#x += 1
 						this.#x -= 1
@@ -311,32 +313,34 @@ func TestLowerPrivateFieldAssignments2019NoBundle(t *testing.T) {
 class Foo {
   constructor() {
     _x.set(this, void 0);
-  }
-  unary() {
-    var _a, _b;
-    __privateSet(this, _x, (_a = +__privateGet(this, _x)) + 1), _a;
-    __privateSet(this, _x, (_b = +__privateGet(this, _x)) - 1), _b;
-    __privateSet(this, _x, +__privateGet(this, _x) + 1);
-    __privateSet(this, _x, +__privateGet(this, _x) - 1);
-  }
-  binary() {
-    var _a;
-    __privateSet(this, _x, 1);
-    __privateSet(this, _x, __privateGet(this, _x) + 1);
-    __privateSet(this, _x, __privateGet(this, _x) - 1);
-    __privateSet(this, _x, __privateGet(this, _x) * 1);
-    __privateSet(this, _x, __privateGet(this, _x) / 1);
-    __privateSet(this, _x, __privateGet(this, _x) % 1);
-    __privateSet(this, _x, __privateGet(this, _x) ** 1);
-    __privateSet(this, _x, __privateGet(this, _x) << 1);
-    __privateSet(this, _x, __privateGet(this, _x) >> 1);
-    __privateSet(this, _x, __privateGet(this, _x) >>> 1);
-    __privateSet(this, _x, __privateGet(this, _x) & 1);
-    __privateSet(this, _x, __privateGet(this, _x) | 1);
-    __privateSet(this, _x, __privateGet(this, _x) ^ 1);
-    __privateGet(this, _x) && __privateSet(this, _x, 1);
-    __privateGet(this, _x) || __privateSet(this, _x, 1);
-    (_a = __privateGet(this, _x)) != null ? _a : __privateSet(this, _x, 1);
+    this.unary = () => {
+      var _a, _b;
+      return [
+        (__privateSet(this, _x, (_a = +__privateGet(this, _x)) + 1), _a),
+        (__privateSet(this, _x, (_b = +__privateGet(this, _x)) - 1), _b),
+        __privateSet(this, _x, +__privateGet(this, _x) + 1),
+        __privateSet(this, _x, +__privateGet(this, _x) - 1)
+      ];
+    };
+    this.binary = () => {
+      var _a;
+      __privateSet(this, _x, 1);
+      __privateSet(this, _x, __privateGet(this, _x) + 1);
+      __privateSet(this, _x, __privateGet(this, _x) - 1);
+      __privateSet(this, _x, __privateGet(this, _x) * 1);
+      __privateSet(this, _x, __privateGet(this, _x) / 1);
+      __privateSet(this, _x, __privateGet(this, _x) % 1);
+      __privateSet(this, _x, __privateGet(this, _x) ** 1);
+      __privateSet(this, _x, __privateGet(this, _x) << 1);
+      __privateSet(this, _x, __privateGet(this, _x) >> 1);
+      __privateSet(this, _x, __privateGet(this, _x) >>> 1);
+      __privateSet(this, _x, __privateGet(this, _x) & 1);
+      __privateSet(this, _x, __privateGet(this, _x) | 1);
+      __privateSet(this, _x, __privateGet(this, _x) ^ 1);
+      __privateGet(this, _x) && __privateSet(this, _x, 1);
+      __privateGet(this, _x) || __privateSet(this, _x, 1);
+      (_a = __privateGet(this, _x)) != null ? _a : __privateSet(this, _x, 1);
+    };
   }
 }
 _x = new WeakMap();
@@ -351,13 +355,13 @@ func TestLowerPrivateFieldAssignments2020NoBundle(t *testing.T) {
 			"/entry.js": `
 				class Foo {
 					#x
-					unary() {
-						this.#x++
-						this.#x--
-						++this.#x
-						--this.#x
-					}
-					binary() {
+					unary = () => [
+						this.#x++,
+						this.#x--,
+						++this.#x,
+						--this.#x,
+					]
+					binary = () => {
 						this.#x = 1
 						this.#x += 1
 						this.#x -= 1
@@ -392,31 +396,33 @@ func TestLowerPrivateFieldAssignments2020NoBundle(t *testing.T) {
 class Foo {
   constructor() {
     _x.set(this, void 0);
-  }
-  unary() {
-    var _a, _b;
-    __privateSet(this, _x, (_a = +__privateGet(this, _x)) + 1), _a;
-    __privateSet(this, _x, (_b = +__privateGet(this, _x)) - 1), _b;
-    __privateSet(this, _x, +__privateGet(this, _x) + 1);
-    __privateSet(this, _x, +__privateGet(this, _x) - 1);
-  }
-  binary() {
-    __privateSet(this, _x, 1);
-    __privateSet(this, _x, __privateGet(this, _x) + 1);
-    __privateSet(this, _x, __privateGet(this, _x) - 1);
-    __privateSet(this, _x, __privateGet(this, _x) * 1);
-    __privateSet(this, _x, __privateGet(this, _x) / 1);
-    __privateSet(this, _x, __privateGet(this, _x) % 1);
-    __privateSet(this, _x, __privateGet(this, _x) ** 1);
-    __privateSet(this, _x, __privateGet(this, _x) << 1);
-    __privateSet(this, _x, __privateGet(this, _x) >> 1);
-    __privateSet(this, _x, __privateGet(this, _x) >>> 1);
-    __privateSet(this, _x, __privateGet(this, _x) & 1);
-    __privateSet(this, _x, __privateGet(this, _x) | 1);
-    __privateSet(this, _x, __privateGet(this, _x) ^ 1);
-    __privateGet(this, _x) && __privateSet(this, _x, 1);
-    __privateGet(this, _x) || __privateSet(this, _x, 1);
-    __privateGet(this, _x) ?? __privateSet(this, _x, 1);
+    this.unary = () => {
+      var _a, _b;
+      return [
+        (__privateSet(this, _x, (_a = +__privateGet(this, _x)) + 1), _a),
+        (__privateSet(this, _x, (_b = +__privateGet(this, _x)) - 1), _b),
+        __privateSet(this, _x, +__privateGet(this, _x) + 1),
+        __privateSet(this, _x, +__privateGet(this, _x) - 1)
+      ];
+    };
+    this.binary = () => {
+      __privateSet(this, _x, 1);
+      __privateSet(this, _x, __privateGet(this, _x) + 1);
+      __privateSet(this, _x, __privateGet(this, _x) - 1);
+      __privateSet(this, _x, __privateGet(this, _x) * 1);
+      __privateSet(this, _x, __privateGet(this, _x) / 1);
+      __privateSet(this, _x, __privateGet(this, _x) % 1);
+      __privateSet(this, _x, __privateGet(this, _x) ** 1);
+      __privateSet(this, _x, __privateGet(this, _x) << 1);
+      __privateSet(this, _x, __privateGet(this, _x) >> 1);
+      __privateSet(this, _x, __privateGet(this, _x) >>> 1);
+      __privateSet(this, _x, __privateGet(this, _x) & 1);
+      __privateSet(this, _x, __privateGet(this, _x) | 1);
+      __privateSet(this, _x, __privateGet(this, _x) ^ 1);
+      __privateGet(this, _x) && __privateSet(this, _x, 1);
+      __privateGet(this, _x) || __privateSet(this, _x, 1);
+      __privateGet(this, _x) ?? __privateSet(this, _x, 1);
+    };
   }
 }
 _x = new WeakMap();
@@ -431,13 +437,13 @@ func TestLowerPrivateFieldAssignmentsNextNoBundle(t *testing.T) {
 			"/entry.js": `
 				class Foo {
 					#x
-					unary() {
-						this.#x++
-						this.#x--
-						++this.#x
-						--this.#x
-					}
-					binary() {
+					unary = () => [
+						this.#x++,
+						this.#x--,
+						++this.#x,
+						--this.#x,
+					]
+					binary = () => {
 						this.#x = 1
 						this.#x += 1
 						this.#x -= 1
@@ -469,13 +475,13 @@ func TestLowerPrivateFieldAssignmentsNextNoBundle(t *testing.T) {
 		expected: map[string]string{
 			"/out.js": `class Foo {
   #x;
-  unary() {
-    this.#x++;
-    this.#x--;
-    ++this.#x;
-    --this.#x;
-  }
-  binary() {
+  unary = () => [
+    this.#x++,
+    this.#x--,
+    ++this.#x,
+    --this.#x
+  ];
+  binary = () => {
     this.#x = 1;
     this.#x += 1;
     this.#x -= 1;
@@ -492,7 +498,7 @@ func TestLowerPrivateFieldAssignmentsNextNoBundle(t *testing.T) {
     this.#x &&= 1;
     this.#x ||= 1;
     this.#x ??= 1;
-  }
+  };
 }
 `,
 		},
@@ -765,19 +771,19 @@ func TestLowerPrivateGetterSetter2015(t *testing.T) {
 					set #bar(val) { this.bar = val }
 					get #prop() { return this.prop }
 					set #prop(val) { this.prop = val }
-					foo(fn) {
+					foo = fn => {
 						fn().#foo
 						fn().#bar = 1
 						fn().#prop
 						fn().#prop = 2
 					}
-					unary(fn) {
-						fn().#prop++;
-						fn().#prop--;
-						++fn().#prop;
-						--fn().#prop;
-					}
-					binary(fn) {
+					unary = fn => [
+						fn().#prop++,
+						fn().#prop--,
+						++fn().#prop,
+						--fn().#prop,
+					]
+					binary = fn => {
 						fn().#prop = 1;
 						fn().#prop += 1;
 						fn().#prop -= 1;
@@ -815,38 +821,40 @@ class Foo {
     _foo.add(this);
     _bar.add(this);
     _prop.add(this);
-  }
-  foo(fn) {
-    __privateGet(fn(), _foo, foo_get);
-    __privateSet(fn(), _bar, 1, bar_set);
-    __privateGet(fn(), _prop, prop_get);
-    __privateSet(fn(), _prop, 2, prop_set);
-  }
-  unary(fn) {
-    var _a, _b, _c, _d, _e, _f;
-    __privateSet(_a = fn(), _prop, (_b = +__privateGet(_a, _prop, prop_get)) + 1, prop_set), _b;
-    __privateSet(_c = fn(), _prop, (_d = +__privateGet(_c, _prop, prop_get)) - 1, prop_set), _d;
-    __privateSet(_e = fn(), _prop, +__privateGet(_e, _prop, prop_get) + 1, prop_set);
-    __privateSet(_f = fn(), _prop, +__privateGet(_f, _prop, prop_get) - 1, prop_set);
-  }
-  binary(fn) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
-    __privateSet(fn(), _prop, 1, prop_set);
-    __privateSet(_a = fn(), _prop, __privateGet(_a, _prop, prop_get) + 1, prop_set);
-    __privateSet(_b = fn(), _prop, __privateGet(_b, _prop, prop_get) - 1, prop_set);
-    __privateSet(_c = fn(), _prop, __privateGet(_c, _prop, prop_get) * 1, prop_set);
-    __privateSet(_d = fn(), _prop, __privateGet(_d, _prop, prop_get) / 1, prop_set);
-    __privateSet(_e = fn(), _prop, __privateGet(_e, _prop, prop_get) % 1, prop_set);
-    __privateSet(_f = fn(), _prop, __pow(__privateGet(_f, _prop, prop_get), 1), prop_set);
-    __privateSet(_g = fn(), _prop, __privateGet(_g, _prop, prop_get) << 1, prop_set);
-    __privateSet(_h = fn(), _prop, __privateGet(_h, _prop, prop_get) >> 1, prop_set);
-    __privateSet(_i = fn(), _prop, __privateGet(_i, _prop, prop_get) >>> 1, prop_set);
-    __privateSet(_j = fn(), _prop, __privateGet(_j, _prop, prop_get) & 1, prop_set);
-    __privateSet(_k = fn(), _prop, __privateGet(_k, _prop, prop_get) | 1, prop_set);
-    __privateSet(_l = fn(), _prop, __privateGet(_l, _prop, prop_get) ^ 1, prop_set);
-    __privateGet(_m = fn(), _prop, prop_get) && __privateSet(_m, _prop, 1, prop_set);
-    __privateGet(_n = fn(), _prop, prop_get) || __privateSet(_n, _prop, 1, prop_set);
-    (_p = __privateGet(_o = fn(), _prop, prop_get)) != null ? _p : __privateSet(_o, _prop, 1, prop_set);
+    this.foo = (fn) => {
+      __privateGet(fn(), _foo, foo_get);
+      __privateSet(fn(), _bar, 1, bar_set);
+      __privateGet(fn(), _prop, prop_get);
+      __privateSet(fn(), _prop, 2, prop_set);
+    };
+    this.unary = (fn) => {
+      var _a, _b, _c, _d, _e, _f;
+      return [
+        (__privateSet(_a = fn(), _prop, (_b = +__privateGet(_a, _prop, prop_get)) + 1, prop_set), _b),
+        (__privateSet(_c = fn(), _prop, (_d = +__privateGet(_c, _prop, prop_get)) - 1, prop_set), _d),
+        __privateSet(_e = fn(), _prop, +__privateGet(_e, _prop, prop_get) + 1, prop_set),
+        __privateSet(_f = fn(), _prop, +__privateGet(_f, _prop, prop_get) - 1, prop_set)
+      ];
+    };
+    this.binary = (fn) => {
+      var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
+      __privateSet(fn(), _prop, 1, prop_set);
+      __privateSet(_a = fn(), _prop, __privateGet(_a, _prop, prop_get) + 1, prop_set);
+      __privateSet(_b = fn(), _prop, __privateGet(_b, _prop, prop_get) - 1, prop_set);
+      __privateSet(_c = fn(), _prop, __privateGet(_c, _prop, prop_get) * 1, prop_set);
+      __privateSet(_d = fn(), _prop, __privateGet(_d, _prop, prop_get) / 1, prop_set);
+      __privateSet(_e = fn(), _prop, __privateGet(_e, _prop, prop_get) % 1, prop_set);
+      __privateSet(_f = fn(), _prop, __pow(__privateGet(_f, _prop, prop_get), 1), prop_set);
+      __privateSet(_g = fn(), _prop, __privateGet(_g, _prop, prop_get) << 1, prop_set);
+      __privateSet(_h = fn(), _prop, __privateGet(_h, _prop, prop_get) >> 1, prop_set);
+      __privateSet(_i = fn(), _prop, __privateGet(_i, _prop, prop_get) >>> 1, prop_set);
+      __privateSet(_j = fn(), _prop, __privateGet(_j, _prop, prop_get) & 1, prop_set);
+      __privateSet(_k = fn(), _prop, __privateGet(_k, _prop, prop_get) | 1, prop_set);
+      __privateSet(_l = fn(), _prop, __privateGet(_l, _prop, prop_get) ^ 1, prop_set);
+      __privateGet(_m = fn(), _prop, prop_get) && __privateSet(_m, _prop, 1, prop_set);
+      __privateGet(_n = fn(), _prop, prop_get) || __privateSet(_n, _prop, 1, prop_set);
+      (_p = __privateGet(_o = fn(), _prop, prop_get)) != null ? _p : __privateSet(_o, _prop, 1, prop_set);
+    };
   }
 }
 _foo = new WeakSet();
@@ -878,19 +886,19 @@ func TestLowerPrivateGetterSetter2019(t *testing.T) {
 					set #bar(val) { this.bar = val }
 					get #prop() { return this.prop }
 					set #prop(val) { this.prop = val }
-					foo(fn) {
+					foo = fn => {
 						fn().#foo
 						fn().#bar = 1
 						fn().#prop
 						fn().#prop = 2
 					}
-					unary(fn) {
-						fn().#prop++;
-						fn().#prop--;
-						++fn().#prop;
-						--fn().#prop;
-					}
-					binary(fn) {
+					unary = fn => [
+						fn().#prop++,
+						fn().#prop--,
+						++fn().#prop,
+						--fn().#prop,
+					]
+					binary = fn => {
 						fn().#prop = 1;
 						fn().#prop += 1;
 						fn().#prop -= 1;
@@ -928,38 +936,40 @@ class Foo {
     _foo.add(this);
     _bar.add(this);
     _prop.add(this);
-  }
-  foo(fn) {
-    __privateGet(fn(), _foo, foo_get);
-    __privateSet(fn(), _bar, 1, bar_set);
-    __privateGet(fn(), _prop, prop_get);
-    __privateSet(fn(), _prop, 2, prop_set);
-  }
-  unary(fn) {
-    var _a, _b, _c, _d, _e, _f;
-    __privateSet(_a = fn(), _prop, (_b = +__privateGet(_a, _prop, prop_get)) + 1, prop_set), _b;
-    __privateSet(_c = fn(), _prop, (_d = +__privateGet(_c, _prop, prop_get)) - 1, prop_set), _d;
-    __privateSet(_e = fn(), _prop, +__privateGet(_e, _prop, prop_get) + 1, prop_set);
-    __privateSet(_f = fn(), _prop, +__privateGet(_f, _prop, prop_get) - 1, prop_set);
-  }
-  binary(fn) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
-    __privateSet(fn(), _prop, 1, prop_set);
-    __privateSet(_a = fn(), _prop, __privateGet(_a, _prop, prop_get) + 1, prop_set);
-    __privateSet(_b = fn(), _prop, __privateGet(_b, _prop, prop_get) - 1, prop_set);
-    __privateSet(_c = fn(), _prop, __privateGet(_c, _prop, prop_get) * 1, prop_set);
-    __privateSet(_d = fn(), _prop, __privateGet(_d, _prop, prop_get) / 1, prop_set);
-    __privateSet(_e = fn(), _prop, __privateGet(_e, _prop, prop_get) % 1, prop_set);
-    __privateSet(_f = fn(), _prop, __privateGet(_f, _prop, prop_get) ** 1, prop_set);
-    __privateSet(_g = fn(), _prop, __privateGet(_g, _prop, prop_get) << 1, prop_set);
-    __privateSet(_h = fn(), _prop, __privateGet(_h, _prop, prop_get) >> 1, prop_set);
-    __privateSet(_i = fn(), _prop, __privateGet(_i, _prop, prop_get) >>> 1, prop_set);
-    __privateSet(_j = fn(), _prop, __privateGet(_j, _prop, prop_get) & 1, prop_set);
-    __privateSet(_k = fn(), _prop, __privateGet(_k, _prop, prop_get) | 1, prop_set);
-    __privateSet(_l = fn(), _prop, __privateGet(_l, _prop, prop_get) ^ 1, prop_set);
-    __privateGet(_m = fn(), _prop, prop_get) && __privateSet(_m, _prop, 1, prop_set);
-    __privateGet(_n = fn(), _prop, prop_get) || __privateSet(_n, _prop, 1, prop_set);
-    (_p = __privateGet(_o = fn(), _prop, prop_get)) != null ? _p : __privateSet(_o, _prop, 1, prop_set);
+    this.foo = (fn) => {
+      __privateGet(fn(), _foo, foo_get);
+      __privateSet(fn(), _bar, 1, bar_set);
+      __privateGet(fn(), _prop, prop_get);
+      __privateSet(fn(), _prop, 2, prop_set);
+    };
+    this.unary = (fn) => {
+      var _a, _b, _c, _d, _e, _f;
+      return [
+        (__privateSet(_a = fn(), _prop, (_b = +__privateGet(_a, _prop, prop_get)) + 1, prop_set), _b),
+        (__privateSet(_c = fn(), _prop, (_d = +__privateGet(_c, _prop, prop_get)) - 1, prop_set), _d),
+        __privateSet(_e = fn(), _prop, +__privateGet(_e, _prop, prop_get) + 1, prop_set),
+        __privateSet(_f = fn(), _prop, +__privateGet(_f, _prop, prop_get) - 1, prop_set)
+      ];
+    };
+    this.binary = (fn) => {
+      var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
+      __privateSet(fn(), _prop, 1, prop_set);
+      __privateSet(_a = fn(), _prop, __privateGet(_a, _prop, prop_get) + 1, prop_set);
+      __privateSet(_b = fn(), _prop, __privateGet(_b, _prop, prop_get) - 1, prop_set);
+      __privateSet(_c = fn(), _prop, __privateGet(_c, _prop, prop_get) * 1, prop_set);
+      __privateSet(_d = fn(), _prop, __privateGet(_d, _prop, prop_get) / 1, prop_set);
+      __privateSet(_e = fn(), _prop, __privateGet(_e, _prop, prop_get) % 1, prop_set);
+      __privateSet(_f = fn(), _prop, __privateGet(_f, _prop, prop_get) ** 1, prop_set);
+      __privateSet(_g = fn(), _prop, __privateGet(_g, _prop, prop_get) << 1, prop_set);
+      __privateSet(_h = fn(), _prop, __privateGet(_h, _prop, prop_get) >> 1, prop_set);
+      __privateSet(_i = fn(), _prop, __privateGet(_i, _prop, prop_get) >>> 1, prop_set);
+      __privateSet(_j = fn(), _prop, __privateGet(_j, _prop, prop_get) & 1, prop_set);
+      __privateSet(_k = fn(), _prop, __privateGet(_k, _prop, prop_get) | 1, prop_set);
+      __privateSet(_l = fn(), _prop, __privateGet(_l, _prop, prop_get) ^ 1, prop_set);
+      __privateGet(_m = fn(), _prop, prop_get) && __privateSet(_m, _prop, 1, prop_set);
+      __privateGet(_n = fn(), _prop, prop_get) || __privateSet(_n, _prop, 1, prop_set);
+      (_p = __privateGet(_o = fn(), _prop, prop_get)) != null ? _p : __privateSet(_o, _prop, 1, prop_set);
+    };
   }
 }
 _foo = new WeakSet();
@@ -991,19 +1001,19 @@ func TestLowerPrivateGetterSetter2020(t *testing.T) {
 					set #bar(val) { this.bar = val }
 					get #prop() { return this.prop }
 					set #prop(val) { this.prop = val }
-					foo(fn) {
+					foo = fn => {
 						fn().#foo
 						fn().#bar = 1
 						fn().#prop
 						fn().#prop = 2
 					}
-					unary(fn) {
-						fn().#prop++;
-						fn().#prop--;
-						++fn().#prop;
-						--fn().#prop;
-					}
-					binary(fn) {
+					unary = fn => [
+						fn().#prop++,
+						fn().#prop--,
+						++fn().#prop,
+						--fn().#prop,
+					]
+					binary = fn => {
 						fn().#prop = 1;
 						fn().#prop += 1;
 						fn().#prop -= 1;
@@ -1041,38 +1051,40 @@ class Foo {
     _foo.add(this);
     _bar.add(this);
     _prop.add(this);
-  }
-  foo(fn) {
-    __privateGet(fn(), _foo, foo_get);
-    __privateSet(fn(), _bar, 1, bar_set);
-    __privateGet(fn(), _prop, prop_get);
-    __privateSet(fn(), _prop, 2, prop_set);
-  }
-  unary(fn) {
-    var _a, _b, _c, _d, _e, _f;
-    __privateSet(_a = fn(), _prop, (_b = +__privateGet(_a, _prop, prop_get)) + 1, prop_set), _b;
-    __privateSet(_c = fn(), _prop, (_d = +__privateGet(_c, _prop, prop_get)) - 1, prop_set), _d;
-    __privateSet(_e = fn(), _prop, +__privateGet(_e, _prop, prop_get) + 1, prop_set);
-    __privateSet(_f = fn(), _prop, +__privateGet(_f, _prop, prop_get) - 1, prop_set);
-  }
-  binary(fn) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
-    __privateSet(fn(), _prop, 1, prop_set);
-    __privateSet(_a = fn(), _prop, __privateGet(_a, _prop, prop_get) + 1, prop_set);
-    __privateSet(_b = fn(), _prop, __privateGet(_b, _prop, prop_get) - 1, prop_set);
-    __privateSet(_c = fn(), _prop, __privateGet(_c, _prop, prop_get) * 1, prop_set);
-    __privateSet(_d = fn(), _prop, __privateGet(_d, _prop, prop_get) / 1, prop_set);
-    __privateSet(_e = fn(), _prop, __privateGet(_e, _prop, prop_get) % 1, prop_set);
-    __privateSet(_f = fn(), _prop, __privateGet(_f, _prop, prop_get) ** 1, prop_set);
-    __privateSet(_g = fn(), _prop, __privateGet(_g, _prop, prop_get) << 1, prop_set);
-    __privateSet(_h = fn(), _prop, __privateGet(_h, _prop, prop_get) >> 1, prop_set);
-    __privateSet(_i = fn(), _prop, __privateGet(_i, _prop, prop_get) >>> 1, prop_set);
-    __privateSet(_j = fn(), _prop, __privateGet(_j, _prop, prop_get) & 1, prop_set);
-    __privateSet(_k = fn(), _prop, __privateGet(_k, _prop, prop_get) | 1, prop_set);
-    __privateSet(_l = fn(), _prop, __privateGet(_l, _prop, prop_get) ^ 1, prop_set);
-    __privateGet(_m = fn(), _prop, prop_get) && __privateSet(_m, _prop, 1, prop_set);
-    __privateGet(_n = fn(), _prop, prop_get) || __privateSet(_n, _prop, 1, prop_set);
-    __privateGet(_o = fn(), _prop, prop_get) ?? __privateSet(_o, _prop, 1, prop_set);
+    this.foo = (fn) => {
+      __privateGet(fn(), _foo, foo_get);
+      __privateSet(fn(), _bar, 1, bar_set);
+      __privateGet(fn(), _prop, prop_get);
+      __privateSet(fn(), _prop, 2, prop_set);
+    };
+    this.unary = (fn) => {
+      var _a, _b, _c, _d, _e, _f;
+      return [
+        (__privateSet(_a = fn(), _prop, (_b = +__privateGet(_a, _prop, prop_get)) + 1, prop_set), _b),
+        (__privateSet(_c = fn(), _prop, (_d = +__privateGet(_c, _prop, prop_get)) - 1, prop_set), _d),
+        __privateSet(_e = fn(), _prop, +__privateGet(_e, _prop, prop_get) + 1, prop_set),
+        __privateSet(_f = fn(), _prop, +__privateGet(_f, _prop, prop_get) - 1, prop_set)
+      ];
+    };
+    this.binary = (fn) => {
+      var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
+      __privateSet(fn(), _prop, 1, prop_set);
+      __privateSet(_a = fn(), _prop, __privateGet(_a, _prop, prop_get) + 1, prop_set);
+      __privateSet(_b = fn(), _prop, __privateGet(_b, _prop, prop_get) - 1, prop_set);
+      __privateSet(_c = fn(), _prop, __privateGet(_c, _prop, prop_get) * 1, prop_set);
+      __privateSet(_d = fn(), _prop, __privateGet(_d, _prop, prop_get) / 1, prop_set);
+      __privateSet(_e = fn(), _prop, __privateGet(_e, _prop, prop_get) % 1, prop_set);
+      __privateSet(_f = fn(), _prop, __privateGet(_f, _prop, prop_get) ** 1, prop_set);
+      __privateSet(_g = fn(), _prop, __privateGet(_g, _prop, prop_get) << 1, prop_set);
+      __privateSet(_h = fn(), _prop, __privateGet(_h, _prop, prop_get) >> 1, prop_set);
+      __privateSet(_i = fn(), _prop, __privateGet(_i, _prop, prop_get) >>> 1, prop_set);
+      __privateSet(_j = fn(), _prop, __privateGet(_j, _prop, prop_get) & 1, prop_set);
+      __privateSet(_k = fn(), _prop, __privateGet(_k, _prop, prop_get) | 1, prop_set);
+      __privateSet(_l = fn(), _prop, __privateGet(_l, _prop, prop_get) ^ 1, prop_set);
+      __privateGet(_m = fn(), _prop, prop_get) && __privateSet(_m, _prop, 1, prop_set);
+      __privateGet(_n = fn(), _prop, prop_get) || __privateSet(_n, _prop, 1, prop_set);
+      __privateGet(_o = fn(), _prop, prop_get) ?? __privateSet(_o, _prop, 1, prop_set);
+    };
   }
 }
 _foo = new WeakSet();
@@ -1104,19 +1116,19 @@ func TestLowerPrivateGetterSetterNext(t *testing.T) {
 					set #bar(val) { this.bar = val }
 					get #prop() { return this.prop }
 					set #prop(val) { this.prop = val }
-					foo(fn) {
+					foo = fn => {
 						fn().#foo
 						fn().#bar = 1
 						fn().#prop
 						fn().#prop = 2
 					}
-					unary(fn) {
-						fn().#prop++;
-						fn().#prop--;
-						++fn().#prop;
-						--fn().#prop;
-					}
-					binary(fn) {
+					unary = fn => [
+						fn().#prop++,
+						fn().#prop--,
+						++fn().#prop,
+						--fn().#prop,
+					]
+					binary = fn => {
 						fn().#prop = 1;
 						fn().#prop += 1;
 						fn().#prop -= 1;
@@ -1160,19 +1172,19 @@ class Foo {
   set #prop(val) {
     this.prop = val;
   }
-  foo(fn) {
+  foo = (fn) => {
     fn().#foo;
     fn().#bar = 1;
     fn().#prop;
     fn().#prop = 2;
-  }
-  unary(fn) {
-    fn().#prop++;
-    fn().#prop--;
-    ++fn().#prop;
-    --fn().#prop;
-  }
-  binary(fn) {
+  };
+  unary = (fn) => [
+    fn().#prop++,
+    fn().#prop--,
+    ++fn().#prop,
+    --fn().#prop
+  ];
+  binary = (fn) => {
     fn().#prop = 1;
     fn().#prop += 1;
     fn().#prop -= 1;
@@ -1189,7 +1201,7 @@ class Foo {
     fn().#prop &&= 1;
     fn().#prop ||= 1;
     fn().#prop ??= 1;
-  }
+  };
 }
 `,
 		},
